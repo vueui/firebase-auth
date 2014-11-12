@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title></title>
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Semantic-Org/Semantic-UI/1.0/dist/semantic.css"/>
+</head>
+<body>
+
+<div id="app" class="ui page grid" style="position:relative;">
+    <ui-auth firebase="ovally" providers="facebook, twitter, google plus" v-ref="auth"></ui-auth>
+</div>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+<script src="https://cdn.rawgit.com/Semantic-Org/Semantic-UI/1.0/dist/semantic.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.0.2/firebase.js"></script>
+<script src="build.js"></script>
+</body>
+</html>

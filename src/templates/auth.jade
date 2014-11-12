@@ -1,0 +1,14 @@
+.ui.two.column.middle.aligned.relaxed.fitted.stackable.vertically.padded.grid
+    .column
+        .ui.form.segment(v-component="{{currentView}}" keep-alive)
+
+    .ui.vertical.divider OR
+
+    .center.aligned.column: .ui.vertical.massive.icon.labeled.buttons
+        div(
+            v-repeat="provider: providers"
+            class="ui {{provider}} button"
+            v-on="click: authProvider(provider, $event)"
+        )
+            i(class="{{provider}} icon")
+            | {{* provider | capitalize}}

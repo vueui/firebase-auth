@@ -1,0 +1,15 @@
+h3.ui.dividing.header Signup
+
+.field
+   label(for="email") E-mail
+   input(type="text" name="email" placeholder="E-mail" v-model="newUser.email" lazy)
+
+.field
+   label(for="password") Password
+   input(
+      type="password"
+      name="password"
+      placeholder="Password"
+      v-model="newUser.password" lazy)
+
+.ui.submit.button Signup

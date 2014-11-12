@@ -1,0 +1,13 @@
+node_modules
+bower_components
+
+# builds
+build
+
+# logs
+npm-debug.log
+
+# Exclude HTML from the prototypes
+
+# other
+.idea

@@ -21,7 +21,10 @@ module.exports = {
                 password: this.password
             };
 
+            // Let other components know signup was successful
             this.$dispatch('signup:success', user);
+
+            // Attempt to log the user in
             this.login();
         },
         'login:success': function (authData) {

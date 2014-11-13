@@ -3,7 +3,7 @@ var UiSignup = require('./signup');
 
 module.exports = {
 
-    paramAttributes: ['firebase', 'providers', 'emailEnabled'],
+    paramAttributes: ['firebase', 'providers'],
 
     compiled: function () {
         this.providers = this.providers

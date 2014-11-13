@@ -17,7 +17,8 @@ module.exports = {
     events: {
         'form:submitted': 'login',
         'login:success': function (authData) {
-            console.log(authData);
+            this.$parent.userLoggedIn = true;
+            this.$dispatch('login:success', authData);
         }
     },
 

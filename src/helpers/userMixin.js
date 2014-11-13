@@ -5,6 +5,7 @@
 
 var getErrorMessage = require('./errorMessage');
 
+
 /**
  * userMixin definition
  */

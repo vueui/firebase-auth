@@ -19,10 +19,8 @@
     "url": "https://github.com/agonbina/vueui-firebase-auth/issues"
   },
   "homepage": "https://github.com/agonbina/vueui-firebase-auth",
-  "dependencies": {
-    "vue": "^0.11.0"
-  },
   "devDependencies": {
+    "vue": "^0.11.0",
     "webpack": "^1.4.10",
     "css-loader": "^0.9.0",
     "style-loader": "^0.8.1",

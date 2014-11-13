@@ -1,6 +1,8 @@
 
 var Vue = require('vue');
-var UiAuth = require('..');
+var vueFirebaseAuth = require('..');
+
+Vue.use(vueFirebaseAuth);
 
 window.app = new Vue({
     events: {

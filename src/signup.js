@@ -16,8 +16,17 @@ module.exports = {
     events: {
         'form:submitted': 'signup',
         'signup:success': function () {
-            console.log('signed up!');
-            //this.login();
+            var user = {
+                email: this.email,
+                password: this.password
+            };
+
+            this.$dispatch('signup:success', user);
+            this.login();
+        },
+        'login:success': function (authData) {
+            this.$parent.userLoggedIn = true;
+            this.$dispatch('login:success', authData);
         }
     },
 

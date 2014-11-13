@@ -17,6 +17,9 @@ module.exports = {
     paramAttributes: ['firebase', 'providers'],
 
     compiled: function () {
+        var firebaseUrl = 'https://' + this.firebase + '.firebaseio.com';
+        this.$firebase = new Firebase(firebaseUrl);
+
         this.providers = this.providers
             ? this.providers.replace(/^\s*|\s*$/g, '').split(/\s*,\s*/)
             : [];
@@ -27,14 +30,32 @@ module.exports = {
             currentView: 'signup',
             isLoading: false,
             emailEnabled: true,
+            errors: {},
             user: {},
-            userLoggedIn: false,
-            errors: {}
+            userAuthenticated: false
         }
     },
 
+    ready: function () {
+        var vm = this;
+        var onAuth = function (authData) {
+            if(authData) {
+                vm.user = authData;
+                vm.userAuthenticated = true;
+            } else {
+                vm.userAuthenticated = false;
+            }
+        };
+
+        this.$firebase.onAuth(onAuth);
+    },
+
+    destroyed: function () {
+        this.$firebase.offAuth();
+    },
+
     methods: {
-        authProvider: function (provider, e) {
+        authWithProvider: function (provider, e) {
             e.stopPropagation();
 
             console.log('Logging in with ' + provider);

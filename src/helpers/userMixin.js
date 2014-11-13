@@ -12,11 +12,6 @@ var getErrorMessage = require('./errorMessage');
 
 module.exports = {
 
-    compiled: function () {
-        var firebaseUrl = 'https://' + this.$parent.firebase + '.firebaseio.com';
-        this.$firebase = new Firebase(firebaseUrl);
-    },
-
     data: function () {
         return {
             email: '',
@@ -34,17 +29,17 @@ module.exports = {
             };
 
             $auth.isLoading = true;
-            vm.$firebase.createUser(user, function onSignup(error) {
+            $auth.$firebase.createUser(user, function onSignup(error) {
                 $auth.isLoading = false;
 
-                if(!error) {
-                    $auth.errors = {};
-                    vm.$emit('signup:success');
-                } else {
+                if(error) {
                     var message = getErrorMessage(error);
 
                     $auth.errors.$add(error.code, message);
-                    vm.$emit('signup:error', error);
+                    vm.$dispatch('signup:error', error);
+                } else {
+                    $auth.errors = {};
+                    vm.$emit('signup:success')
                 }
             });
         },
@@ -58,17 +53,16 @@ module.exports = {
             };
 
             $auth.isLoading = true;
-            vm.$firebase.authWithPassword(user, function (error, authData) {
+            $auth.$firebase.authWithPassword(user, function (error, authData) {
                 $auth.isLoading = false;
 
                 if(error) {
                     var message = getErrorMessage(error);
 
                     $auth.errors.$add(error.code, message);
-                    vm.$emit('login:error');
+                    vm.$dispatch('login:error');
                 } else {
                     $auth.errors = {};
-                    vm.$emit('login:success', authData);
                 }
             });
         }

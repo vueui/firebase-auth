@@ -15,11 +15,7 @@ module.exports = {
     name: 'Login',
 
     events: {
-        'form:submitted': 'login',
-        'login:success': function (authData) {
-            this.$parent.userLoggedIn = true;
-            this.$dispatch('login:success', authData);
-        }
+        'form:submitted': 'login'
     },
 
     mixins: [ attachFormMixin, userMixin ],

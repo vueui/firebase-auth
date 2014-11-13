@@ -15,7 +15,7 @@
         div(
             v-repeat="provider: providers"
             class="ui {{provider}} button"
-            v-on="click: authProvider(provider, $event)"
+            v-on="click: authWithProvider(provider, $event)"
         )
             i(class="{{provider}} icon")
             | {{* provider | capitalize}}

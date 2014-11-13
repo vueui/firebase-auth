@@ -1,7 +1,18 @@
-var UiLogin = require('./login');
-var UiSignup = require('./signup');
+
+/**
+ * Component dependencies
+ */
+
+var Login = require('./login');
+var Signup = require('./signup');
+
+
+/**
+ * <ui-auth> definition
+ */
 
 module.exports = {
+    name: 'Auth',
 
     paramAttributes: ['firebase', 'providers'],
 
@@ -50,8 +61,8 @@ module.exports = {
     },
 
     components: {
-        login: UiLogin,
-        signup: UiSignup
+        login: Login,
+        signup: Signup
     },
 
     template: require('./templates/auth.jade')

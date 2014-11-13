@@ -1,14 +1,14 @@
 
 
-var UiAuth = require('./src/auth');
-var UiLogin = require('./src/login');
-var UiSignup = require('./src/login');
+var Auth = require('./src/auth');
+var Login = require('./src/login');
+var Signup = require('./src/login');
 
 
 exports.install = function (Vue) {
 
-    Vue.component('ui-auth', UiAuth);
-    Vue.component('ui-login', UiLogin);
-    Vue.component('ui-signup', UiSignup);
+    Vue.component('ui-auth', Auth);
+    Vue.component('ui-login', Login);
+    Vue.component('ui-signup', Signup);
 
 };

@@ -42,6 +42,10 @@ module.exports = {
             if(authData) {
                 vm.user = authData;
                 vm.userAuthenticated = true;
+
+                if(vm.currentView === 'signup') {
+                    vm.$firebase.child('users').child(authData.uid).set(authData);
+                }
             } else {
                 vm.userAuthenticated = false;
             }

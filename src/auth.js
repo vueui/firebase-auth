@@ -18,7 +18,7 @@ module.exports = {
             emailEnabled: true,
             user: {},
             userLoggedIn: false,
-            errors: []
+            errors: {}
         }
     },
 
@@ -32,7 +32,20 @@ module.exports = {
 
     watch: {
         currentView: function (view) {
-            this.errors = [];
+            this.errors = {};
+        }
+    },
+
+    computed: {
+        hasErrors: function () {
+            var errors = this.errors;
+            var hasErrors = false;
+
+            Object.keys(errors).forEach(function (error) {
+               hasErrors = errors.hasOwnProperty(error) ? true : false;
+            });
+
+            return hasErrors;
         }
     },
 

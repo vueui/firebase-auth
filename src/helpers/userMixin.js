@@ -34,17 +34,17 @@ module.exports = {
 
             $auth.isLoading = true;
             vm.$firebase.createUser(user, function onSignup(error) {
+                $auth.isLoading = false;
+
                 if(!error) {
-                    $auth.errors = [];
+                    $auth.errors = {};
                     vm.$emit('signup:success');
                 } else {
                     var message = getErrorMessage(error);
 
-                    $auth.errors.push(message);
+                    $auth.errors.$add(error.code, message);
                     vm.$emit('signup:error', error);
                 }
-
-                $auth.isLoading = false;
             });
         },
 
@@ -58,17 +58,17 @@ module.exports = {
 
             $auth.isLoading = true;
             vm.$firebase.authWithPassword(user, function (error, authData) {
+                $auth.isLoading = false;
+
                 if(error) {
                     var message = getErrorMessage(error);
 
-                    $auth.errors.push(message);
+                    $auth.errors.$add(error.code, message);
                     vm.$emit('login:error');
                 } else {
-                    $auth.errors = [];
+                    $auth.errors = {};
                     vm.$emit('login:success', authData);
                 }
-
-                $auth.isLoading = false;
             });
         }
     }

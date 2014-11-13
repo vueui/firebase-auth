@@ -1,7 +1,7 @@
 .ui.two.column.middle.aligned.relaxed.fitted.stackable.vertically.padded.grid
     .column
-        .ui.error.message(v-if="errors.length > 0"): ul.list
-            li(v-repeat="message: errors") {{* message}}
+        .ui.error.message(v-if="hasErrors"): ul.list
+            li(v-repeat="errors") {{* $value}}
 
         .ui.form.segment(
             v-component="{{currentView}}"

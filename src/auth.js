@@ -13,16 +13,12 @@ module.exports = {
 
     data: function () {
         return {
-            user: {
-                email: '',
-                password: ''
-            },
-            newUser: {
-                email: '',
-                password: ''
-            },
             currentView: 'signup',
-            emailEnabled: true
+            isLoading: false,
+            emailEnabled: true,
+            user: {},
+            userLoggedIn: false,
+            errors: []
         }
     },
 
@@ -31,6 +27,12 @@ module.exports = {
             e.stopPropagation();
 
             console.log('Logging in with ' + provider);
+        }
+    },
+
+    watch: {
+        currentView: function (view) {
+            this.errors = [];
         }
     },
 

@@ -3,10 +3,13 @@ module.exports = {
     attached: function () {
         var vm = this;
         var validation = require('./validationRules');
-
-        $(vm.$el).form(validation, {
+        var settings = {
             inline: true,
-            onSuccess: vm.signup.bind(vm)
-        });
+            onSuccess: function () {
+                vm.$emit('form:submitted');
+            }
+        };
+
+        $(vm.$el).form(validation, settings);
     }
 };

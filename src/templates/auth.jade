@@ -1,6 +1,13 @@
 .ui.two.column.middle.aligned.relaxed.fitted.stackable.vertically.padded.grid
     .column
-        .ui.form.segment(v-component="{{currentView}}" keep-alive)
+        .ui.error.message(v-if="errors.length > 0"): ul.list
+            li(v-repeat="message: errors") {{* message}}
+
+        .ui.form.segment(
+            v-component="{{currentView}}"
+            v-class="loading: isLoading"
+            keep-alive
+        )
 
     .ui.vertical.divider OR
 

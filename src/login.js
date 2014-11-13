@@ -1,16 +1,27 @@
 
+/**
+ * Component dependencies
+ */
+
 var attachFormMixin  = require('./helpers/attachFormMixin');
+var userMixin = require('./helpers/userMixin');
+
+
+/**
+ * UiLogin definition
+ */
 
 module.exports = {
-    inherit: true,
+    name: 'Login',
 
-    methods: {
-        login: function () {
-
+    events: {
+        'form:submitted': 'login',
+        'login:success': function (authData) {
+            console.log(authData);
         }
     },
 
-    mixins: [ attachFormMixin ],
+    mixins: [ attachFormMixin, userMixin ],
 
     template: require('./templates/login.jade')
 };

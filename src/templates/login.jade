@@ -1,11 +1,13 @@
-h3.ui.dividing.header Login
+h2.ui.green.dividing.header
+    i.user.icon
+    | Login
 
-.field
+.ui.huge.input.field
     label(for="email") E-mail
-    input(type="text" name="email" placeholder="E-mail" v-model="email")
+    input.huge(type="text" name="email" placeholder="E-mail" v-model="email")
 
-.field
+.ui.huge.input.field
     label(for="password") Password
-    input(type="password" name="password" placeholder="Password" v-model="password")
+    input.huge(type="password" name="password" placeholder="Password" v-model="password")
 
 .ui.submit.button Login

@@ -1,5 +1,5 @@
 .ui.two.column.middle.aligned.relaxed.fitted.stackable.vertically.padded.grid
-    .column
+    .column(style="margin-top: 1rem")
         .ui.error.message(v-if="hasErrors"): ul.list
             li(v-repeat="errors") {{* $value}}
 

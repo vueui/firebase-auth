@@ -5,6 +5,34 @@
 
 var Login = require('./login');
 var Signup = require('./signup');
+var getErrorMessage = require('./helpers/errorMessage');
+
+
+/**
+ * auth helpers
+ */
+
+function onAuth(authData) {
+    var vm = this;
+
+    if(authData) {
+        vm.user = authData;
+        vm.userAuthenticated = true;
+
+        if(vm.currentView === 'signup') {
+            vm.$firebase.child('users').child(authData.uid).set(authData);
+        }
+    } else {
+        vm.userAuthenticated = false;
+    }
+}
+
+function onAuthError(error) {
+    var vm = this;
+    var message = getErrorMessage(error);
+
+    vm.errors.$add(message);
+}
 
 
 /**
@@ -38,20 +66,8 @@ module.exports = {
 
     ready: function () {
         var vm = this;
-        var onAuth = function (authData) {
-            if(authData) {
-                vm.user = authData;
-                vm.userAuthenticated = true;
 
-                if(vm.currentView === 'signup') {
-                    vm.$firebase.child('users').child(authData.uid).set(authData);
-                }
-            } else {
-                vm.userAuthenticated = false;
-            }
-        };
-
-        this.$firebase.onAuth(onAuth);
+        vm.$firebase.onAuth(onAuth.bind(vm));
     },
 
     destroyed: function () {
@@ -60,9 +76,30 @@ module.exports = {
 
     methods: {
         authWithProvider: function (provider, e) {
-            e.stopPropagation();
+            var vm = this;
 
-            console.log('Logging in with ' + provider);
+            // Normalize google plus provider name
+            provider = provider === 'google plus' ? 'google' : provider;
+
+            function onProviderAuth(error, authData) {
+                if(error) {
+                    if(error.code === 'TRANSPORT_UNAVAILABLE') {
+                        vm.$firebase.authWithOAuthRedirect(provider, function (error, authData) {
+                            if(error) onAuthError.call(vm, error);
+                            else onAuth.call(vm, authData)
+                        })
+                    } else {
+                        onAuthError.call(vm, error);
+                    }
+                    vm.$dispatch(provider + ':autherror', error);
+                } else {
+                    onAuth.call(vm, authData);
+                }
+            }
+
+            vm.$firebase.authWithOAuthPopup(provider, onProviderAuth);
+
+            e.stopPropagation();
         }
     },
 

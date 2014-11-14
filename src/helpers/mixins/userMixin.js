@@ -31,20 +31,19 @@ module.exports = {
 
             $auth.$user.signup(user)
                 .then(userCreated)
-                .catch(onSignupError)
+                .catch(authError.bind($auth))
+                .catch(signupError)
                 .finally(function () {
                     $auth.isLoading = false;
                 });
 
             function userCreated(user) {
                 $auth.errors = {};
-                vm.$emit('signup:success', user);
+                vm.$dispatch('signup:success', user);
+                vm.login();
             }
 
-            function onSignupError(error) {
-                var message = getErrorMessage(error);
-
-                $auth.errors.$add(error.code, message);
+            function signupError(error) {
                 vm.$dispatch('signup:error', error);
             }
         },
@@ -60,6 +59,7 @@ module.exports = {
             $auth.isLoading = true;
             $auth.$user.login(user)
                 .then(loggedIn)
+                .catch(authError.bind($auth))
                 .catch(loginError)
                 .finally(function () {
                     $auth.isLoading = false;
@@ -67,14 +67,21 @@ module.exports = {
 
             function loggedIn(authData) {
                 $auth.errors = {};
+                vm.$dispatch('login:success', authData);
             }
 
             function loginError(error) {
-                var message = getErrorMessage(error);
-
-                $auth.errors.$add(error.code, message);
                 vm.$dispatch('login:error', error);
             }
         }
     }
 };
+
+// Helpers
+
+function authError(error) {
+    var message = getErrorMessage(error);
+
+    this.errors.$add(error.code, message);
+    throw error;
+}

@@ -14,12 +14,7 @@ module.exports = {
     name: 'Signup',
 
     events: {
-        'form:submitted': 'signup',
-
-        'signup:success': function (user) {
-            // Attempt to log the user in
-            this.login();
-        }
+        'form:submitted': 'signup'
     },
 
     mixins: [ attachFormMixin, userMixin ],

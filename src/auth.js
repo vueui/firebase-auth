@@ -25,6 +25,7 @@ function onAuth(authData) {
             firebase.child('users').child(authData.uid).set(authData);
         }
     } else {
+        vm.user = {};
         vm.userAuthenticated = false;
     }
 }
@@ -76,10 +77,9 @@ module.exports = {
             $user.authWithProvider(provider)
                 .then(onAuth.bind(vm))
                 .catch(function(error) {
-                    var vm = this;
                     var message = getErrorMessage(error);
 
-                    vm.errors.$add(message);
+                    vm.errors.$add(error.code, message);
                 });
 
             e.stopPropagation();

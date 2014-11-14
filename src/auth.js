@@ -6,6 +6,7 @@
 var Login = require('./login');
 var Signup = require('./signup');
 var getErrorMessage = require('./helpers/errorMessage');
+var User = require('./helpers/user');
 
 
 /**
@@ -14,24 +15,18 @@ var getErrorMessage = require('./helpers/errorMessage');
 
 function onAuth(authData) {
     var vm = this;
+    var firebase = this.$user.firebase;
 
     if(authData) {
         vm.user = authData;
         vm.userAuthenticated = true;
 
         if(vm.currentView === 'signup') {
-            vm.$firebase.child('users').child(authData.uid).set(authData);
+            firebase.child('users').child(authData.uid).set(authData);
         }
     } else {
         vm.userAuthenticated = false;
     }
-}
-
-function onAuthError(error) {
-    var vm = this;
-    var message = getErrorMessage(error);
-
-    vm.errors.$add(message);
 }
 
 
@@ -45,8 +40,7 @@ module.exports = {
     paramAttributes: ['firebase', 'providers'],
 
     compiled: function () {
-        var firebaseUrl = 'https://' + this.firebase + '.firebaseio.com';
-        this.$firebase = new Firebase(firebaseUrl);
+        this.$user = new User(this.firebase);
 
         this.providers = this.providers
             ? this.providers.replace(/^\s*|\s*$/g, '').split(/\s*,\s*/)
@@ -65,39 +59,28 @@ module.exports = {
     },
 
     ready: function () {
-        var vm = this;
-
-        vm.$firebase.onAuth(onAuth.bind(vm));
+        var firebase = this.$user.firebase;
+        firebase.onAuth(onAuth.bind(this));
     },
 
     destroyed: function () {
-        this.$firebase.offAuth();
+        var firebase = this.$user.firebase;
+        firebase.offAuth();
     },
 
     methods: {
         authWithProvider: function (provider, e) {
             var vm = this;
+            var $user = this.$user;
 
-            // Normalize google plus provider name
-            provider = provider === 'google plus' ? 'google' : provider;
+            $user.authWithProvider(provider)
+                .then(onAuth.bind(vm))
+                .catch(function(error) {
+                    var vm = this;
+                    var message = getErrorMessage(error);
 
-            function onProviderAuth(error, authData) {
-                if(error) {
-                    if(error.code === 'TRANSPORT_UNAVAILABLE') {
-                        vm.$firebase.authWithOAuthRedirect(provider, function (error, authData) {
-                            if(error) onAuthError.call(vm, error);
-                            else onAuth.call(vm, authData)
-                        })
-                    } else {
-                        onAuthError.call(vm, error);
-                    }
-                    vm.$dispatch(provider + ':autherror', error);
-                } else {
-                    onAuth.call(vm, authData);
-                }
-            }
-
-            vm.$firebase.authWithOAuthPopup(provider, onProviderAuth);
+                    vm.errors.$add(message);
+                });
 
             e.stopPropagation();
         }

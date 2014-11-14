@@ -2,7 +2,7 @@
 module.exports = {
     attached: function () {
         var vm = this;
-        var validation = require('./validationRules');
+        var validation = require('./../validationRules');
         var settings = {
             inline: true,
             onSuccess: function () {

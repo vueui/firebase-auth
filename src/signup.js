@@ -3,8 +3,8 @@
  * Component dependencies
  */
 
-var attachFormMixin = require('./helpers/attachFormMixin');
-var userMixin = require('./helpers/userMixin');
+var attachFormMixin = require('./helpers/mixins/attachFormMixin');
+var userMixin = require('./helpers/mixins/userMixin');
 
 /**
  * UiSignup definition
@@ -15,7 +15,8 @@ module.exports = {
 
     events: {
         'form:submitted': 'signup',
-        'signup:success': function () {
+
+        'signup:success': function (user) {
             // Attempt to log the user in
             this.login();
         }

@@ -3,8 +3,8 @@
  * Component dependencies
  */
 
-var attachFormMixin  = require('./helpers/attachFormMixin');
-var userMixin = require('./helpers/userMixin');
+var attachFormMixin  = require('./helpers/mixins/attachFormMixin');
+var userMixin = require('./helpers/mixins/userMixin');
 
 
 /**

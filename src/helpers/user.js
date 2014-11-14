@@ -46,12 +46,34 @@ User.prototype.login = function (user) {
 User.prototype.authWithProvider = function (provider) {
     var firebase = this.firebase;
 
+    // Normalize 'google plus' to 'google'
+    provider = provider === 'google plus' ? 'google' : provider;
+
     return new Promise(function (resolve, reject) {
 
         firebase.authWithOAuthPopup(provider, function (error, authData) {
-            if(error) reject(error);
-            else if(authData) resolve(authData);
+            if(error) {
+                if(error.code === 'TRANSPORT_UNAVAILABLE') {
+                    firebase.authWithOAuthRedirect(provider, function (err, authData) {
+                        if(err) reject(err);
+                        else if(authData) resolve(authData);
+                    });
+                } else {
+                    reject(error);
+                }
+            } else if(authData) {
+                resolve(authData);
+            }
         })
 
+    });
+};
+
+User.prototype.logout = function () {
+    var firebase = this.firebase;
+
+    return new Promise(function (resolve, reject) {
+        firebase.unauth();
+        resolve();
     });
 };

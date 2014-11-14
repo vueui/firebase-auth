@@ -29,13 +29,6 @@ function onAuth(authData) {
     }
 }
 
-function onAuthError(error) {
-    var vm = this;
-    var message = getErrorMessage(error);
-
-    vm.errors.$add(message);
-}
-
 
 /**
  * <ui-auth> definition
@@ -78,6 +71,16 @@ module.exports = {
     methods: {
         authWithProvider: function (provider, e) {
             var vm = this;
+            var $user = this.$user;
+
+            $user.authWithProvider(provider)
+                .then(onAuth.bind(vm))
+                .catch(function(error) {
+                    var vm = this;
+                    var message = getErrorMessage(error);
+
+                    vm.errors.$add(message);
+                });
 
             e.stopPropagation();
         }

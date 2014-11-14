@@ -73,7 +73,7 @@ module.exports = {
                 var message = getErrorMessage(error);
 
                 $auth.errors.$add(error.code, message);
-                vm.$dispatch('login:error');
+                vm.$dispatch('login:error', error);
             }
         }
     }

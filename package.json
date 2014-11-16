@@ -1,24 +1,22 @@
 {
   "name": "vueui-firebase-auth",
-  "version": "0.0.1",
-  "description": "Vue component that makes it very easy to set up authentication workflows with Firebase",
+  "version": "0.1.0",
+  "description": "Vue.js component that makes it very easy to set up authentication workflows with Firebase",
   "main": "index.js",
   "directories": {
     "example": "example"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git@github.com:agonbina/vueui-firebase-auth.git"
+    "url": "git@github.com:vueui/firebase-auth.git"
   },
   "author": "Agon Bina <agon_bina@hotmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/agonbina/vueui-firebase-auth/issues"
+    "url": "https://github.com/vueui/firebase-auth/issues"
   },
-  "homepage": "https://github.com/agonbina/vueui-firebase-auth",
+  "homepage": "https://github.com/vueui/firebase-auth",
   "dependencies": {
     "rsvp": "3.0.x"
   },

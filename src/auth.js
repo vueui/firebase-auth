@@ -105,9 +105,8 @@ module.exports = {
     },
 
     watch: {
-        currentView: function (view) {
-            this.errors = {};
-        }
+        currentView: function (view) { this.errors = {} },
+        userAuthenticated: function () { this.errors = {} }
     },
 
     computed: {

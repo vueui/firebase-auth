@@ -14,7 +14,7 @@
     .center.aligned.column: .ui.vertical.massive.icon.labeled.buttons
         div(
             v-repeat="provider: providers"
-            class="ui {{provider}} button"
+            class="ui {{provider}} {{ provider === 'google' ? 'plus' : '' }} button"
             v-on="click: authWithProvider(provider, $event)"
         )
             i(class="{{provider}} icon")

@@ -43,11 +43,9 @@ User.prototype.login = function (user) {
     });
 };
 
-User.prototype.authWithProvider = function (provider) {
+User.prototype.authWithProvider = function (provider, scope) {
     var firebase = this.firebase;
-
-    // Normalize 'google plus' to 'google'
-    provider = provider === 'google plus' ? 'google' : provider;
+    var settings = { scope: scope };
 
     return new Promise(function (resolve, reject) {
 
@@ -57,14 +55,14 @@ User.prototype.authWithProvider = function (provider) {
                     firebase.authWithOAuthRedirect(provider, function (err, authData) {
                         if(err) reject(err);
                         else if(authData) resolve(authData);
-                    });
+                    }, settings);
                 } else {
                     reject(error);
                 }
             } else if(authData) {
                 resolve(authData);
             }
-        })
+        }, settings)
 
     });
 };

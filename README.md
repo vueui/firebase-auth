@@ -19,7 +19,7 @@ using ```ui-auth```, unless you need to customize the UI, etc.
 You now have two ways to consume the component:
 
 ```html
-<ui-auth firebase="your-firebase-app" providers="facebook, twitter, google plus"></ui-auth>
+<ui-auth firebase="your-firebase-app" facebook='email' google='email' github='user, gist' twitter></ui-auth>
 ```
 
 OR
@@ -31,7 +31,12 @@ var auth = new Auth({
     el: '#some-id',
     data: {
         firebase: 'your-firebase-app',
-        providers: [ 'facebook', 'twitter', 'github' ]
+        providers: [ 'facebook', 'twitter', 'github' ],
+        scopes: {
+            facebook: 'email, user_likes',
+            google: 'email',
+            github: 'user, gist'
+        }
     }
 })
 ```

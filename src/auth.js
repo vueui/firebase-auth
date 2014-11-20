@@ -38,24 +38,41 @@ function onAuth(authData) {
 module.exports = {
     name: 'Auth',
 
-    paramAttributes: ['firebase', 'providers'],
+    paramAttributes: ['firebase', 'facebook', 'google', 'github', 'twitter'],
 
     compiled: function () {
         this.$user = new User(this.firebase);
 
-        this.providers = this.providers
-            ? this.providers.replace(/^\s*|\s*$/g, '').split(/\s*,\s*/)
-            : [];
+        if(this.facebook != undefined) {
+            this.providers.push('facebook');
+            this.scopes['facebook'] = this.facebook;
+        }
+
+        if(this.google != undefined) {
+            this.providers.push('google');
+            this.scopes['google'] = this.google;
+        }
+
+        if(this.twitter === '') {
+            this.providers.push('twitter');
+            // Twitter doesn't have the option to use a scope
+        }
+
+        if(this.github != undefined) {
+            this.providers.push('github');
+            this.scopes['github'] = this.github;
+        }
     },
 
     data: function () {
         return {
             currentView: 'signup',
             isLoading: false,
-            emailEnabled: true,
             errors: {},
             user: {},
-            userAuthenticated: false
+            userAuthenticated: false,
+            providers: [],
+            scopes: {}
         }
     },
 
@@ -73,8 +90,9 @@ module.exports = {
         authWithProvider: function (provider, e) {
             var vm = this;
             var $user = this.$user;
+            var scope = this.scopes[provider] || '';
 
-            $user.authWithProvider(provider)
+            $user.authWithProvider(provider, scope)
                 .then(onAuth.bind(vm))
                 .catch(function(error) {
                     var message = getErrorMessage(error);

@@ -19,7 +19,12 @@ using ```ui-auth```, unless you need to customize the UI, etc.
 You now have two ways to consume the component:
 
 ```html
-<ui-auth firebase="your-firebase-app" facebook='email' google='email' github='user, gist' twitter></ui-auth>
+<ui-auth
+    firebase="your-firebase-app"
+    facebook='email'
+    google='email'
+    github='user, gist'
+    twitter></ui-auth>
 ```
 
 OR
@@ -52,4 +57,4 @@ Each ui-auth instance contains a ```$user``` property which has the following me
 
 ### .logout()
 
-### .authWithProvider(provider|String)
+### .authWithProvider(provider|String, scope|String)

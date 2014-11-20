@@ -1,6 +1,8 @@
 ## vueui-firebase-auth
 The easiest way to setup Firebase authentication if you are using Vue.js and Semantic-UI.
 
+![vueui-firebase-auth](https://raw.githubusercontent.com/vueui/firebase-auth/master/assets/screenshot.png)
+
 ## Usage
 First install the npm package:
 ```npm i -S vueui-firebase-auth```

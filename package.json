@@ -1,7 +1,7 @@
 {
   "name": "vueui-firebase-auth",
-  "version": "0.2.0",
-  "description": "Vue.js component that makes it very easy to set up authentication workflows with Firebase",
+  "version": "0.2.1",
+  "description": "Vue.js component that makes it very easy to set up authentication flows with Firebase",
   "main": "index.js",
   "directories": {
     "example": "example"

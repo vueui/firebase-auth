@@ -14,8 +14,10 @@
 </head>
 <body>
 
-<div id="app" class="ui page grid" style="position:relative;">
-    <ui-auth firebase="ovally" facebook="email" google="email" twitter v-ref="auth"></ui-auth>
+<div id="app" class="ui page grid">
+    <div class="row">
+    	<ui-auth firebase="ovally" facebook="email" google="email" twitter v-ref="auth"></ui-auth>
+    </div>
 </div>
 
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>

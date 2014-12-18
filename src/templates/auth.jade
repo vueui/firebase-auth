@@ -1,4 +1,4 @@
-.ui.two.column.middle.aligned.relaxed.fitted.stackable.vertically.padded.grid
+.ui.two.column.middle.aligned.relaxed.fitted.stackable.vertically.padded.grid(v-show="!userAuthenticated" v-transition="fade-up")
     .column
         .ui.error.message(v-if="hasErrors"): ul.list
             li(v-repeat="errors") {{* $value}}

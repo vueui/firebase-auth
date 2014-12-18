@@ -38,7 +38,7 @@ var auth = new Auth({
     el: '#some-id',
     data: {
         firebase: 'your-firebase-app',
-        providers: [ 'facebook', 'twitter', 'github' ],
+        providers: [ 'facebook', 'google', 'github' ],
         scopes: {
             facebook: 'email, user_likes',
             google: 'email',
@@ -51,7 +51,7 @@ var auth = new Auth({
 
 ## API
 
-Each ui-auth instance contains a ```$user``` property which has the following methods:
+A ```$user``` property is attached to ```$root``` and it has the following methods:
 
 ### .signup(user|Object)
 
@@ -60,3 +60,8 @@ Each ui-auth instance contains a ```$user``` property which has the following me
 ### .logout()
 
 ### .authWithProvider(provider|String, scope|String)
+
+## Events
+
+Two events are emitted on ```$root``` when a user is authenticated: ```user:loggedIn``` which receives the ```user```
+data as an argument, and ```user:loggedOut```

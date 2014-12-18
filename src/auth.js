@@ -15,7 +15,7 @@ var User = require('./helpers/user');
 
 function onAuth(authData) {
     var vm = this;
-    var firebase = this.$user.firebase;
+    var firebase = this.$root.$user.firebase;
 
     if(authData) {
         vm.user = authData;
@@ -41,7 +41,7 @@ module.exports = {
     paramAttributes: ['firebase', 'facebook', 'google', 'github', 'twitter'],
 
     compiled: function () {
-        this.$user = new User(this.firebase);
+        this.$root.$user = new User(this.firebase);
 
         if(this.facebook != undefined) {
             this.providers.push('facebook');
@@ -77,26 +77,23 @@ module.exports = {
     },
 
     ready: function () {
-        var firebase = this.$user.firebase;
-        firebase.onAuth(onAuth.bind(this));
+        this.$root.$user.firebase.onAuth(onAuth.bind(this));
     },
 
     destroyed: function () {
-        var firebase = this.$user.firebase;
-        firebase.offAuth();
+        this.$root.$user.firebase.offAuth();
     },
 
     methods: {
         authWithProvider: function (provider, e) {
             var vm = this;
-            var $user = this.$user;
+            var $user = this.$root.$user;
             var scope = this.scopes[provider] || '';
 
             $user.authWithProvider(provider, scope)
                 .then(onAuth.bind(vm))
                 .catch(function(error) {
                     var message = getErrorMessage(error);
-
                     vm.errors.$add(error.code, message);
                 });
 
@@ -105,8 +102,18 @@ module.exports = {
     },
 
     watch: {
-        currentView: function (view) { this.errors = {} },
-        userAuthenticated: function () { this.errors = {} }
+        currentView: function () {
+            this.errors = {}
+        },
+        userAuthenticated: function (isAuthenticated) {
+            this.errors = {}
+
+            if(isAuthenticated) {
+                this.$root.$emit('user:loggedIn', this.user)
+            } else {
+                this.$root.$emit('user:loggedOut')
+            }
+        }
     },
 
     computed: {

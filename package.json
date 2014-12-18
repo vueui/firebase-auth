@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/vueui/firebase-auth",
   "dependencies": {
-    "rsvp": "3.0.x"
+    "rsvp": "3.0.14"
   },
   "devDependencies": {
-    "vue": "^0.11.0",
+    "vue": "0.11.x",
     "webpack": "^1.4.10",
     "css-loader": "^0.9.0",
     "style-loader": "^0.8.1",
